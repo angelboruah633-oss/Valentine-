@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 💖</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ff5f8f, #ff9a9e);
+  color: white;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+/* Floating hearts */
+.heart {
+  position: fixed;
+  bottom: -40px;
+  font-size: 22px;
+  animation: float 9s linear infinite;
+  opacity: 0.8;
+}
+@keyframes float {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-120vh) scale(1.4); opacity: 0; }
+}
+
+/* Sections */
+section {
+  display: none;
+  min-height: 100vh;
+  padding: 60px 20px;
+}
+section.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Headings */
+h1 { font-size: 2.3rem; margin-bottom: 30px; }
+h2 { font-size: 1.8rem; }
+
+/* Buttons */
+button {
+  padding: 14px 28px;
+  border-radius: 40px;
+  border: none;
+  font-size: 1.1rem;
+  margin: 10px;
+  cursor: pointer;
+}
+.yes { background: #ff2e63; color: white; }
+.next { background: #ff4d6d; color: white; }
+
+.no {
+  position: absolute;
+  background: #555;
+  color: white;
+}
+
+/* Envelope */
+.envelope {
+  width: 320px;
+  height: 220px;
+  background: #ff4d6d;
+  border-radius: 15px;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.flap {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 50%;
+  background: #ff2e63;
+  clip-path: polygon(0 0, 50% 100%, 100% 0);
+  transform-origin: top;
+  transition: transform 1s ease;
+  z-index: 2;
+}
+
+.envelope.open .flap {
+  transform: rotateX(180deg);
+}
+
+.letter {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  color: #333;
+  padding: 25px;
+  transform: translateY(100%);
+  transition: transform 1s ease;
+  border-radius: 12px;
+  overflow-y: auto;
+}
+
+.envelope.open .letter {
+  transform: translateY(0);
+}
+
+/* Images */
+img {
+  width: 90%;
+  max-width: 420px;
+  border-radius: 20px;
+  margin-top: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background Music -->
+<audio autoplay loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<section class="active" id="p1">
+  <h1>💖 Ashish, will you be my Valentine? 💖</h1>
+
+  <button class="yes" onclick="go('p2')">Obviously Yes</button>
+  <button class="yes" onclick="go('p2')">I Would Love To</button>
+
+  <button class="no" id="noBtn">No</button>
+</section>
+
+<!-- PAGE 2 : ENVELOPE -->
+<section id="p2">
+  <h2>Tap the envelope 💌</h2>
+
+  <div class="envelope" onclick="openEnvelope()">
+    <div class="flap"></div>
+    <div class="letter">
+      <p>
+        <b>Hi guru jiii!</b><br><br>
+        Let's watch <b>Tarak Mehta Ka Oolta Chasma</b> together.
+        You're the one I feel safe talking to.
+        From prank-calling you to actually looking forward to your texts every day —
+        I think I’ve been “pranked” by my own feelings (jk dei 😜).
+        <br><br>
+        I know you're locked in for exams right now,
+        but I’d love to take you out for a belated Valentine’s date once you're finished.
+        No pressure at all until then. 💌
+      </p>
+
+      <button class="next" onclick="go('p3')">Next ❤️</button>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 3 -->
+<section id="p3">
+  <img src="photo1.jpg">
+  <button class="next" onclick="go('p4')">Next ❤️</button>
+</section>
+
+<!-- PAGE 4 -->
+<section id="p4">
+  <h2>I knew itt my love guru 😌💖</h2>
+  <img src="photo2.jpg">
+  <button class="next" onclick="go('p5')">Next ❤️</button>
+</section>
+
+<!-- PAGE 5 -->
+<section id="p5">
+  <h2>Let's go from this...</h2>
+  <img src="photo3.jpg">
+  <h2>…to this 😛🫶🏻</h2>
+  <img src="photo4.jpg">
+</section>
+
+<script>
+/* Floating hearts */
+setInterval(() => {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerText = "💖";
+  h.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 9000);
+}, 350);
+
+/* NO button runs away */
+const noBtn = document.getElementById("noBtn");
+noBtn.onmouseover = () => {
+  noBtn.style.left = Math.random() * 80 + "vw";
+  noBtn.style.top = Math.random() * 80 + "vh";
+};
+noBtn.onclick = e => e.preventDefault();
+
+/* Navigation */
+function go(id) {
+  document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+/* Envelope open */
+function openEnvelope() {
+  document.querySelector(".envelope").classList.add("open");
+}
+</script>
+
+</body>
+</html>
